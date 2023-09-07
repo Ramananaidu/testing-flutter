@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main
-
+env:
+  KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+  KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+  KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,16 +26,12 @@ jobs:
       - name: Build APK
         run: |          
           chmod +x AtdMobileApp/gradlew
-          cd AtdMobileApp && ./gradlew assembleRelease
-          pwd && cd /home/runner/work/testing-flutter/testing-flutter/AtdMobileApp/app/build/outputs/apk/release && ls -la
-      - name: Sign APK
-        run: |
-          echo "$APKSIGNER_KEYSTORE_PASSWORD" > keystore_password.txt
-          echo "$APKSIGNER_KEY_PASSWORD" > key_password.txt
-          apksigner sign --ks my-release-key.jks --ks-pass file:keystore_password.txt --key-pass file:key_password.txt app-release-unsigned.apk
-        env:
-          APKSIGNER_KEYSTORE_PASSWORD: ${{ secrets.APKSIGNER_KEYSTORE_PASSWORD }}
-          APKSIGNER_KEY_PASSWORD: ${{ secrets.APKSIGNER_KEY_PASSWORD }}
+          cd AtdMobileApp && ./gradlew assembleRelease && ./gradlew bundleRelease
+          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore keystore.jks -storepass $KEYSTORE_PASSWORD -keypass $KEY_PASSWORD app-release-unsigned.aab $KEY_ALIAS
+          zipalign -v -p 4 app-release-unsigned.aab app-release-signed.aab
+          #pwd && cd /home/runner/work/testing-flutter/testing-flutter/AtdMobileApp/app/build/outputs/apk/release && ls -la
+      
+          
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
