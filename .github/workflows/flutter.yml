@@ -23,5 +23,5 @@ jobs:
         run: |          
           chmod +x AtdMobileApp/gradlew
           cd AtdMobileApp && ./gradlew assembleRelease
-          pwd && ls -la
+          pwd && cd /home/runner/work/testing-flutter/testing-flutter/AtdMobileApp/app/build && ls -la
         
