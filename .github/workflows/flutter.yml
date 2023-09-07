@@ -24,6 +24,14 @@ jobs:
           chmod +x AtdMobileApp/gradlew
           cd AtdMobileApp && ./gradlew assembleRelease
           pwd && cd /home/runner/work/testing-flutter/testing-flutter/AtdMobileApp/app/build/outputs/apk/release && ls -la
+      - name: Sign APK
+        run: |
+          echo "$APKSIGNER_KEYSTORE_PASSWORD" > keystore_password.txt
+          echo "$APKSIGNER_KEY_PASSWORD" > key_password.txt
+          apksigner sign --ks my-release-key.jks --ks-pass file:keystore_password.txt --key-pass file:key_password.txt app-release-unsigned.apk
+        env:
+          APKSIGNER_KEYSTORE_PASSWORD: ${{ secrets.APKSIGNER_KEYSTORE_PASSWORD }}
+          APKSIGNER_KEY_PASSWORD: ${{ secrets.APKSIGNER_KEY_PASSWORD }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
