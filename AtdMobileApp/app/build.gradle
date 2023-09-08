@@ -9,13 +9,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 //    buildToolsVersion "33.0.2"
 
     defaultConfig {
         applicationId "com.atd.atdmobileapp"
-        minSdkVersion 31
-        targetSdkVersion 31
+        minSdkVersion 33
+        targetSdkVersion 33
         versionCode 202308200
         versionName "2023.08.200"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
