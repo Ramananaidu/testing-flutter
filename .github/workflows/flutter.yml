@@ -23,8 +23,8 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           
-      - name: Set up Android SDK
-        uses: android/setup-android@v2
+      - name: Setup Android SDK
+        uses: Xmaxer/setup-android@v1
         with:
           sdk-version: '33'
       
