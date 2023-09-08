@@ -22,11 +22,16 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
+          
+      - name: Set up Android SDK
+        uses: android/setup-android@v2
+        with:
+          sdk-version: '33'
       
       - name: Build APK
         run: |          
           chmod +x AtdMobileApp/gradlew
-          cd AtdMobileApp && ./gradlew assembleRelease && ./gradlew bundleRelease
+          cd AtdMobileApp && ./gradlew assembleRelease
           # jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore keystore.jks -storepass $KEYSTORE_PASSWORD -keypass $KEY_PASSWORD app-release-unsigned.aab $KEY_ALIAS
           # zipalign -v -p 4 app-release-unsigned.aab app-release-signed.aab
           #pwd && cd /home/runner/work/testing-flutter/testing-flutter/AtdMobileApp/app/build/outputs/apk/release && ls -la
