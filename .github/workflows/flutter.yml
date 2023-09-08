@@ -36,8 +36,9 @@ jobs:
       
       - name: Clean and Build APK
         run: |          
-          cd AtdMobileApp && ./gradlew clean
+          
           chmod +x AtdMobileApp/gradlew
+          cd AtdMobileApp && ./gradlew clean
           cd AtdMobileApp && ./gradlew assembleRelease
           # jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore keystore.jks -storepass $KEYSTORE_PASSWORD -keypass $KEY_PASSWORD app-release-unsigned.aab $KEY_ALIAS
           # zipalign -v -p 4 app-release-unsigned.aab app-release-signed.aab
