@@ -26,10 +26,17 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
         with:
-          sdk-platform: 'platforms;android-33'
+          sdk-platform: 'platforms;android-30'
+          
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          sdk-version: '31'
+          
       
-      - name: Build APK
+      - name: Clean and Build APK
         run: |          
+          cd /home/runner/work/testing-flutter/testing-flutter/AtdMobileApp/app/build/outputs/apk/release && ./gradlew clean
           chmod +x AtdMobileApp/gradlew
           cd AtdMobileApp && ./gradlew assembleRelease
           # jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore keystore.jks -storepass $KEYSTORE_PASSWORD -keypass $KEY_PASSWORD app-release-unsigned.aab $KEY_ALIAS
