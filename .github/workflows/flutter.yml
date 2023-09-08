@@ -27,8 +27,8 @@ jobs:
         run: |          
           chmod +x AtdMobileApp/gradlew
           cd AtdMobileApp && ./gradlew assembleRelease && ./gradlew bundleRelease
-          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore keystore.jks -storepass $KEYSTORE_PASSWORD -keypass $KEY_PASSWORD app-release-unsigned.aab $KEY_ALIAS
-          zipalign -v -p 4 app-release-unsigned.aab app-release-signed.aab
+          # jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore keystore.jks -storepass $KEYSTORE_PASSWORD -keypass $KEY_PASSWORD app-release-unsigned.aab $KEY_ALIAS
+          # zipalign -v -p 4 app-release-unsigned.aab app-release-signed.aab
           #pwd && cd /home/runner/work/testing-flutter/testing-flutter/AtdMobileApp/app/build/outputs/apk/release && ls -la
       
           
