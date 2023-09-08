@@ -24,9 +24,9 @@ jobs:
           distribution: 'adopt'
           
       - name: Setup Android SDK
-        uses: Xmaxer/setup-android@v2
+        uses: android-actions/setup-android@v2
         with:
-          sdk-version: '33'
+          sdk-platform: 'platforms;android-33'
       
       - name: Build APK
         run: |          
